@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task, TaskDocument } from './schema/tasks.schema';
 
 @Injectable()
@@ -23,10 +24,16 @@ export class TasksService {
   async update(
     taskId: string,
     userId: string,
-    task: CreateTaskDto,
+    task: UpdateTaskDto,
   ): Promise<TaskDocument> {
+    const { title, description } = task;
+
     return this.taskModel
-      .findOneAndUpdate({ _id: taskId, user: userId }, task, { new: true })
+      .findOneAndUpdate(
+        { _id: taskId, user: userId },
+        { title, description },
+        { new: true },
+      )
       .exec();
   }
 

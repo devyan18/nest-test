@@ -13,6 +13,7 @@ import {
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UserDocument } from 'src/users/schema/user.schema';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 import { TasksService } from './tasks.service';
 @UseGuards(JwtAuthGuard)
 @Controller('api/tasks')
@@ -43,12 +44,12 @@ export class TasksController {
 
   @Put(':taskId')
   updateTask(
-    @Body() createTaskDto: CreateTaskDto,
+    @Body() updateTaskDto: UpdateTaskDto,
     @Param('taskId') taskId: string,
     @Request() req,
   ) {
     const user = req.user as UserDocument;
-    return this.tasksService.update(taskId, user._id, createTaskDto);
+    return this.tasksService.update(taskId, user._id, updateTaskDto);
   }
 
   @Patch(':taskId')

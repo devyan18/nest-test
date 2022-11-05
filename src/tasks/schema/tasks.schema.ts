@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { UserDocument } from 'src/users/schema/user.schema';
 
 export type TaskDocument = Task & Document;
 
@@ -12,7 +11,7 @@ export class Task {
   @Prop()
   description: string;
 
-  @Prop()
+  @Prop({ default: false })
   done: boolean;
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
